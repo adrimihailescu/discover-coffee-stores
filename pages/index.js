@@ -3,6 +3,7 @@ import Banner from '../components/banner';
 import Card from '../components/card';
 import styles from '../styles/Home.module.css'
 import Image from 'next/dist/client/image';
+import coffeeStore from "../data/coffee-stores.json";
 
 export default function Home() {
   const handleOnBannerBtnClick = () => {
@@ -19,7 +20,17 @@ export default function Home() {
         <Banner buttonText="View stores nearby" handleOnClick={handleOnBannerBtnClick}/>
         <div className={styles.heroImage}>
         <Image src="/static/hero-image.png" alt="A lady drinking coffee" width={700} height={400} />
-        <Card name="DarkHorse coffee" imgUrl="/static/hero-image.png" href="/coffee-store/darkhorse-coffee"/>
+        </div>
+        <div className={styles.cardLayout}>
+          {coffeeStore.map((coffeeStore) => {
+            return (
+              // eslint-disable-next-line react/jsx-key
+              <Card  name={coffeeStore.name} imgUrl={coffeeStore.imgUrl} href={`/coffee-store/${coffeeStore.id}`} className={styles.card}/>
+
+            );
+          })
+        }
+
         </div>
       </main>
     </div>
