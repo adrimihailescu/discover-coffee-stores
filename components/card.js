@@ -6,14 +6,19 @@ import cls from "classnames";
 
 const Card = (props) => {
   return (
-    <Link href={props.imgUrl}>
+    <Link href={props.href}>
       <a className={styles.cardLink}>
         <div className={cls("glass", styles.container)}>
         <div className={styles.cardHeaderWrapper}>
             <h2 className={styles.cardHeader}>{props.name}</h2>
         </div>
         <div className={styles.cardImageWrapper}>
-            <Image className={styles.cardImage} src={props.imgUrl} alt="image" width={260} height={160} />
+            <Image 
+            className={styles.cardImage} 
+            src={props.imgUrl} 
+            alt={props.name} 
+            width={260} 
+            height={160} />
         </div>
         </div>
       </a>
