@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import Image from 'next/dist/client/image';
 import coffeeStoresData from "../data/coffee-stores.json";
 import { fetchCoffeeStores } from '../lib/coffee-stores';
+import useTrackLocation from "../hooks/use-track-location";
 
 
 //server side
@@ -22,8 +23,14 @@ export async function getStaticProps(context) {
 
 export default function Home(props) {
   console.log('props', props);
+
+  const {handleTrackLocation, latLong, locationErrorMsg, isFindingLocation} = useTrackLocation();
+
+  console.log( {latLong, locationErrorMsg});
+
   const handleOnBannerBtnClick = () => {
     console.log('Hi banner button');
+    handleTrackLocation();
   };
   return (
     <div className={styles.container}>
@@ -33,7 +40,9 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         <main className={styles.main}>
-          <Banner buttonText="View stores nearby" handleOnClick={handleOnBannerBtnClick}/>
+          <Banner buttonText={isFindingLocation ? "Locating..." : "View stores nearby"} 
+          handleOnClick={handleOnBannerBtnClick}/>
+          {locationErrorMsg && <p>Something went wrong: {locationErrorMsg}</p>}
           <div className={styles.heroImage}>
             <Image src="/static/hero-image.png" alt="A lady drinking coffee" width={700} height={400} />
           </div>
