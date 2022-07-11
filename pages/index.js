@@ -60,7 +60,7 @@ export default function Home(props) {
 			}
 		}
 		setCoffeeStoresByLocation();
-	}, [latLong]);
+	}, [dispatch, latLong]);
 
 	const handleOnBannerBtnClick = () => {
 		console.log("Hi banner button");

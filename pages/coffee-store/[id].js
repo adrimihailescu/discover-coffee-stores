@@ -68,7 +68,7 @@ const CoffeeStore = (initialProps) => {
 				setCoffeeStore(findCoffeeStoreById);
 			}
 		}
-	}, [id]);
+	}, [coffeeStores, id, initialProps.coffeeStore]);
 
 	const { name, address, neighborhood, imgUrl } = coffeeStore;
 
