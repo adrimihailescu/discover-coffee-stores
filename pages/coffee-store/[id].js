@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/dist/client/link";
-import { StoreContext } from "../_app";
+import { StoreContext } from "../../store/store-context";
 
 import coffeeStoresData from "../../data/coffee-stores.json";
 import Head from "next/head";
