@@ -15,7 +15,6 @@ import useSWR from "swr";
 
 export async function getStaticProps(staticProps) {
 	const params = staticProps.params;
-	console.log("params", params);
 	const coffeeStores = await fetchCoffeeStores();
 	const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
 		return coffeeStore.id.toString() === params.id;
@@ -79,7 +78,6 @@ const CoffeeStore = (initialProps) => {
 			});
 
 			const dbCoffeeStore = response.json();
-			console.log(dbCoffeeStore);
 		} catch (err) {
 			console.error("Error creating coffee store", err);
 		}
@@ -105,7 +103,7 @@ const CoffeeStore = (initialProps) => {
 	const { name, address, neighborhood, imgUrl } = coffeeStore;
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const [votingCount, setVotingCount] = useState(1);
+	const [votingCount, setVotingCount] = useState(0);
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
@@ -113,7 +111,6 @@ const CoffeeStore = (initialProps) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	useEffect(() => {
 		if (data && data.length > 0) {
-			console.log("data from swr", data);
 			setCoffeeStore(data[0]);
 
 			setVotingCount(data[0].voting);
@@ -121,7 +118,6 @@ const CoffeeStore = (initialProps) => {
 	}, [data]);
 
 	const handleUpvoteButton = async () => {
-		console.log("handle upvote!");
 		try {
 			const response = await fetch("/api/favouriteCoffeeStoreById", {
 				method: "PUT",
@@ -134,7 +130,6 @@ const CoffeeStore = (initialProps) => {
 			});
 
 			const dbCoffeeStore = await response.json();
-			console.log(dbCoffeeStore);
 
 			if (dbCoffeeStore && dbCoffeeStore.length > 0) {
 				let count = votingCount + 1;
