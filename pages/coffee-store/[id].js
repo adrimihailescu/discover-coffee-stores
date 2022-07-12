@@ -102,8 +102,13 @@ const CoffeeStore = (initialProps) => {
 
 	const { name, address, neighborhood, imgUrl } = coffeeStore;
 
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const [votingCount, setVotingCount] = useState(1);
+
 	const handleUpvoteButton = () => {
 		console.log("handle upvote!");
+		let count = votingCount + 1;
+		setVotingCount(count);
 	};
 
 	return (
@@ -163,7 +168,7 @@ const CoffeeStore = (initialProps) => {
 							height="24"
 							alt="image"
 						/>
-						<p className={styles.text}>1</p>
+						<p className={styles.text}>{votingCount}</p>
 					</div>
 
 					<button className={styles.upvoteButton} onClick={handleUpvoteButton}>
