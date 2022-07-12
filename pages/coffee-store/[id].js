@@ -58,15 +58,45 @@ const CoffeeStore = (initialProps) => {
 
 	const id = router.query.id;
 
+	const handleCreateCoffeeStore = async (coffeeStore) => {
+		try {
+			const { id, name, address, neighborhood, imgUrl, voting } = coffeeStore;
+			const response = await fetch("/api/createCoffeeStore", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id,
+					name,
+					address: address || "",
+					neighborhood: neighborhood || "",
+					imgUrl,
+					voting: 0,
+				}),
+			});
+
+			const dbCoffeeStore = response.json();
+			console.log(dbCoffeeStore);
+		} catch (err) {
+			console.error("Error creating coffee store", err);
+		}
+	};
+
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	useEffect(() => {
 		if (isEmpty(initialProps.coffeeStore)) {
 			if (coffeeStores.length > 0) {
-				const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+				const coffeeStoreFromContext = coffeeStores.find((coffeeStore) => {
 					return coffeeStore.id.toString() === id;
 				});
-				setCoffeeStore(findCoffeeStoreById);
+				if (coffeeStoreFromContext) {
+					setCoffeeStore(coffeeStoreFromContext);
+					handleCreateCoffeeStore(coffeeStoreFromContext);
+				}
 			}
+		} else {
+			handleCreateCoffeeStore(initialProps.coffeeStore);
 		}
 	}, [coffeeStores, id, initialProps.coffeeStore]);
 
